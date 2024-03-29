@@ -1,0 +1,10 @@
+[bot]
+token = ""
+blacklist_file_path = "blacklist.txt"
+
+[server]
+guild_id = ""
+channel_id = ""
+command_channel_id = ""
+log_channel_id = ""
+role_id = ""
