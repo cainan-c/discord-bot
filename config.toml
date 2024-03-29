@@ -8,3 +8,7 @@ channel_id = ""
 command_channel_id = ""
 log_channel_id = ""
 role_id = ""
+
+[rules]
+rules_channel_id = ""
+rules_jpn_channel_id = ""

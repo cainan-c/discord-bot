@@ -38,8 +38,10 @@ async def on_member_join(member):
     guild_id = config["server"]["guild_id"]
     guild = bot.get_guild(int(guild_id))
     channel = guild.get_channel(int(config["server"]["channel_id"]))
+    rules = guild.get_channel(int(config["rules"]["rules_channel_id"]))
+    rules_jpn = guild.get_channel(int(config["rules"]["rules_jpn_channel_id"]))    
     role = guild.get_role(int(config["server"]["role_id"]))
-    welcome_message = f"Hello, {member.mention}. Welcome to {member.guild.name}!\nIntroduce yourself in {channel.mention} to get the {role.name} role and access to the rest of the server."
+    welcome_message = f"Hello, {member.mention}.\nWelcome to {member.guild.name}!\nPlease take a moment to read the server rules {rules.mention}.\nIntroduce yourself in {channel.mention} to get the {role.name} role and access to the rest of the server!\n\n\nこんにちは、{member.mention}さん。\n「{member.guild.name}」へようこそ！\nサーバーのルールを確認してください。 \n「{rules_jpn.mention}」で自分を自己紹介して「{channel.mention}」 で自己紹介して、「{role.name}」 ロールを付与されてアクセスすることができます！"
     await member.send(welcome_message)
 
 # Function to check if a user ID is blacklisted
@@ -92,10 +94,11 @@ async def unblacklist(ctx, user_id, *, reason="No reason provided"):
 
 @bot.event
 async def on_message(message):
-    if len(message.content) < 15:
-        await message.author.send("Introduction too short. Please try again.")
-        return
-    
+    if message.channel.id == int(config["server"]["channel_id"]):
+        if len(message.content) < 15:
+            await message.author.send("Introduction too short. Please try again.\n\n自己紹介が短すぎます。再度お試しください。")
+            return
+            
     await bot.process_commands(message)
     # Check if the message is in the specified channel
     if message.channel.id == int(config["server"]["channel_id"]):
@@ -106,6 +109,7 @@ async def on_message(message):
         if not is_user_blacklisted(user_id):
             try:
                 await message.author.add_roles(role)
+                await message.author.send(f"You have been assigned the role {role.name}. Welcome to the server!\n\nあなたは「{role.name}」というロールを付与されました！サーバーへようこそ！")
                 print(f"{message.author.mention} has been assigned the role {role.name}.")
                 log_channel = guild.get_channel(int(config["server"]["log_channel_id"]))
                 await log_channel.send(f"User {message.author.mention} has been assigned the role {role.name}.")
