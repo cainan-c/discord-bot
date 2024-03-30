@@ -60,7 +60,7 @@ async def help(ctx):
         channel = bot.get_channel(int(config["server"]["channel_id"]))
         command_channel = bot.get_channel(int(config["server"]["command_channel_id"]))
         log_channel = bot.get_channel(int(config["server"]["log_channel_id"]))
-        await ctx.send(f'Hello! I am <@1223361485904809994>. My Job is to help automate server joining.\nWhenever a new user sends a message in {channel.mention}, I will automatically assign them a role!\n\nThe following commands can be used:\n`!blacklist user_id <reason>` - This will add a user to our blacklist.\n`!unblacklist user_id <reason>` - this will remove a user from our blacklist.\n\nCommands will only be read from {command_channel.mention}\nAll logs will be sent to {log_channel.mention}')
+        await ctx.send(f'Hello! I am <@1223421359292547073>. My Job is to help automate server joining.\nWhenever a new user sends a message in {channel.mention}, I will automatically assign them a role!\n\nThe following commands can be used:\n`!blacklist user_id <reason>` - This will add a user to our blacklist.\n`!unblacklist user_id <reason>` - this will remove a user from our blacklist.\n\nCommands will only be read from {command_channel.mention}\nAll logs will be sent to {log_channel.mention}')
     else:
         print(f"Cannot use command outside of designated channel.")
 
